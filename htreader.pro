@@ -3,3 +3,5 @@ TARGET = htreader
 INCLUDEPATH += .
 
 SOURCES += src/main.cpp
+
+QT += widgets
