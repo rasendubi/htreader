@@ -7,7 +7,7 @@ import models.SchedulingInfo
 object SM2 {
   def init(id: Long, dateAdded: Date) =
     new SchedulingInfo(
-      id = id,
+      cardId = id,
       eFactor = 2.5,
       repetition = 1,
       interval = 1,
@@ -18,6 +18,7 @@ object SM2 {
     if (quality < 3) {
       new SchedulingInfo(
         id = item.id,
+        cardId = item.cardId,
         eFactor = item.eFactor,
         repetition = 1,
         interval = 1,
@@ -28,6 +29,7 @@ object SM2 {
       val nextInterval = interval(item.interval, eFactor, item.repetition + 1)
       new SchedulingInfo(
         id = item.id,
+        cardId = item.cardId,
         eFactor = eFactor,
         repetition = item.repetition + 1,
         interval = nextInterval,

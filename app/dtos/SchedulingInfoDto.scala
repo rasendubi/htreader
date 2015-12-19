@@ -10,12 +10,13 @@ object SchedulingInfoDto {
 
   def save(info: SchedulingInfo): SchedulingInfo = {
     DB.withConnection { conn =>
-      val statement = conn.prepareStatement("INSERT INTO SchedulingInfo (eFactor, repetition, interval, nextDate) VALUES (?, ?, ?, ?)",
+      val statement = conn.prepareStatement("INSERT INTO SchedulingInfo (cardId, eFactor, repetition, interval, nextDate) VALUES (?, ?, ?, ?, ?)",
         java.sql.Statement.RETURN_GENERATED_KEYS)
-      statement.setDouble(1, info.eFactor)
-      statement.setInt(2, info.repetition)
-      statement.setLong(3, info.interval)
-      statement.setDate(4, new java.sql.Date(info.nextDate.getTime))
+      statement.setLong(1, info.cardId)
+      statement.setDouble(2, info.eFactor)
+      statement.setInt(3, info.repetition)
+      statement.setLong(4, info.interval)
+      statement.setDate(5, new java.sql.Date(info.nextDate.getTime))
       statement.executeUpdate()
       val generatedKey = statement.getGeneratedKeys
       if (generatedKey.next()) new SchedulingInfo(generatedKey.getLong(1), info)
@@ -25,12 +26,13 @@ object SchedulingInfoDto {
 
   def update(info: SchedulingInfo): SchedulingInfo = {
     DB.withConnection { conn =>
-      val statement = conn.prepareStatement("UPDATE SchedulingInfo SET eFactor=?, repetition=?, interval=?, nextDate=? WHERE id=?")
-      statement.setDouble(1, info.eFactor)
-      statement.setInt(2, info.repetition)
-      statement.setLong(3, info.interval)
-      statement.setDate(4, new java.sql.Date(info.nextDate.getTime))
-      statement.setLong(5, info.id)
+      val statement = conn.prepareStatement("UPDATE SchedulingInfo SET cardId=?, eFactor=?, repetition=?, interval=?, nextDate=? WHERE id=?")
+      statement.setLong(1, info.cardId)
+      statement.setDouble(2, info.eFactor)
+      statement.setInt(3, info.repetition)
+      statement.setLong(4, info.interval)
+      statement.setDate(5, new java.sql.Date(info.nextDate.getTime))
+      statement.setLong(6, info.id)
       statement.executeUpdate()
     }
     info
@@ -41,7 +43,7 @@ object SchedulingInfoDto {
       val statement = conn.prepareStatement("SELECT * FROM SchedulingInfo WHERE id=?")
       statement.setLong(1, id)
       val resultSet = statement.executeQuery()
-      if (resultSet.next()) new SchedulingInfo(resultSet.getLong("id"), resultSet.getLong("eFactor"),
+      if (resultSet.next()) new SchedulingInfo(resultSet.getLong("id"), resultSet.getLong("cardId"), resultSet.getLong("eFactor"),
         resultSet.getInt("repetition"), resultSet.getLong("interval"), resultSet.getDate("nextDate"))
       else null
     }
@@ -53,7 +55,7 @@ object SchedulingInfoDto {
       val statement = conn.prepareStatement("SELECT * FROM SchedulingInfo")
       val resultSet = statement.executeQuery()
       while (resultSet.next()) {
-        infos += new SchedulingInfo(resultSet.getLong("id"), resultSet.getLong("eFactor"),
+        infos += new SchedulingInfo(resultSet.getLong("id"), resultSet.getLong("cardId"), resultSet.getLong("eFactor"),
           resultSet.getInt("repetition"), resultSet.getLong("interval"), resultSet.getDate("nextDate"))
       }
     }

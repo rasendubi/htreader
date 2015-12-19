@@ -28,7 +28,7 @@ object ArticleDto {
       statement.setString(1, article.title)
       statement.setString(2, article.text)
       statement.setString(3, article.source)
-      statement.setLong(5, article.id)
+      statement.setLong(4, article.id)
       statement.executeUpdate()
     }
     article
