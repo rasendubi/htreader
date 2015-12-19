@@ -38,7 +38,7 @@ object Application extends Controller {
     val schedulingInfo = SchedulingInfoDto.get(id)
     val newSchedulingInfo = SM2.schedule(schedulingInfo, dateAnswered, quality)
     SchedulingInfoDto.update(newSchedulingInfo)
-    Ok()
+    OkEmpty
   }
 
   def getArticle(id: Long) = Action { request =>
