@@ -14,4 +14,8 @@ dist
 /RUNNING_PID
 /.settings
 
-    
+# Front-end
+node_modules
+*.js
+*.map
+*.log
