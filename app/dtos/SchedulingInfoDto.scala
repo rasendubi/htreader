@@ -8,6 +8,18 @@ import scala.collection.mutable.ListBuffer
 
 object SchedulingInfoDto {
 
+  def save(info: SchedulingInfo): SchedulingInfo = {
+    DB.withConnection { conn =>
+      val statement = conn.prepareStatement("INSERT INTO SchedulingInfo (eFactor, repetition, interval, nextDate) VALUES (?, ?, ?, ?)")
+      statement.setDouble(1, info.eFactor)
+      statement.setInt(2, info.repetition)
+      statement.setLong(3, info.interval)
+      statement.setDate(4, new java.sql.Date(info.nextDate.getTime))
+      statement.executeUpdate()
+    }
+    info
+  }
+
   def getAll: List[SchedulingInfo] = {
     val infos = new ListBuffer[SchedulingInfo]()
     DB.withConnection { conn =>
@@ -19,16 +31,5 @@ object SchedulingInfoDto {
       }
     }
     infos.toList
-  }
-
-  def save(info: SchedulingInfo) = {
-    DB.withConnection { conn =>
-      val statement = conn.prepareStatement("INSERT INTO SchedulingInfo (eFactor, repetition, interval, nextDate) VALUES (?, ?, ?, ?)")
-      statement.setDouble(1, info.eFactor)
-      statement.setInt(2, info.repetition)
-      statement.setLong(3, info.interval)
-      statement.setDate(4, new java.sql.Date(info.nextDate.getTime))
-      statement.executeUpdate()
-    }
   }
 }
