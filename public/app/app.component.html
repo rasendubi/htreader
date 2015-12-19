@@ -1,0 +1,11 @@
+<div class="row main">
+    <div class="col-md-3 leftpanel">
+        <h1>Menu</h1> <br>
+        <a [routerLink]="['Cards']">Cards</a> <br>
+        <a [routerLink]="['Extracts']">Extracts</a> <br>
+        <a [routerLink]="['Texts']">Texts</a> <br>
+    </div>
+    <div class="col-md-9 rightpanel">
+        <router-outlet></router-outlet>
+    </div>
+</div>

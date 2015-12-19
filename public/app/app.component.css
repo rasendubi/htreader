@@ -1,0 +1,13 @@
+.main {
+    height: 100%;
+}
+
+.leftpanel {
+    border-right: 1px solid black;
+    min-width: 10rem;
+    height: 100%;
+}
+
+.rightpanel {
+    height: 100%;
+}

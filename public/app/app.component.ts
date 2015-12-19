@@ -1,22 +1,23 @@
 import {Component} from 'angular2/core';
+import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
+import {CardsComponent} from './cards.component';
+import {ExtractsComponent} from './extracts.component';
+import {TextsComponent} from './texts.component';
 
 @Component({
-    selector: 'my-app',
-    template: `
-    <div class="row" id="main">
-        <div class="col-md-3" id="leftpanel">
-            <a [routerLink]="['Dashboard']">Dashboard</a>
-            <a [routerLink]="['Heroes']">Heroes</a>
-            <router-outlet></router-outlet>
-        </div>
-        <div class="col-md-9" id="rightpanel">Right panel</div>
-    </div>
-    `,
+    selector: 'ht-reader',
+    templateUrl: 'app/app.component.html',
     styleUrls: [
         'node_modules/bootstrap/dist/css/bootstrap.css',
         'app/app.component.css'
-    ]
+    ],
+    directives: [ROUTER_DIRECTIVES]
 })
+@RouteConfig([
+  {path: '/cards', name: 'Cards', component: CardsComponent, useAsDefault: true},
+  {path: '/extracts', name: 'Extracts', component: ExtractsComponent},
+  {path: '/texts/', name: 'Texts', component: TextsComponent}
+])
 export class AppComponent { 
     
 }
