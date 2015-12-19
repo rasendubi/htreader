@@ -1,11 +1,27 @@
-<div *ngIf="selectedCard()">
-    <div>The question: {{selectedCard().question}}</div>
-    <div><input type="button" value="OK"></div>
-    <div>Answer: {{selectedCard().answer}} </div>
-    <div>
-        <input *ngFor="#value of [0,1,2,3,4,5]" type="button" value="{{value}}" (click)="setMark(value)">
+<div class="cardsview">
+    <div *ngIf="selectedCard()">
+        <div>The question: {{selectedCard().question}}</div>
+        <div (load)="okBtn.focus()">
+            <input type="button" value="OK" class="btn btn-success"
+                id="ok-btn"
+                #okBtn
+                [disabled]="userClickedOk" (click)="okClicked()">
+        </div>
+        <div class="answerview">
+            <span *ngIf="userClickedOk">
+                Answer: {{selectedCard().answer}}
+            </span>
+        </div>
+        <div>
+            <input *ngFor="#value of [0,1,2,3,4,5]"
+                type="button" class="btn btn-success mark"
+                [disabled]="!userClickedOk"
+                [id]="'mark-btn-' + value"
+                [value]="value"
+                (click)="setMark(value)">
+        </div>
     </div>
-</div>
-<div *ngIf="!selectedCard()">
-    No more cards left. Congratulations!
+    <div *ngIf="!selectedCard()">
+        No more cards left. Congratulations!
+    </div>
 </div>

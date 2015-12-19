@@ -1,3 +1,4 @@
+*.db3
 logs
 project/project
 project/target
