@@ -1,12 +1,21 @@
 package controllers
 
-import dtos.{CardDto, ExtractDto, ArticleDto}
-import models.{Card, Extract, Article}
+import java.text.DateFormat
+import java.util.Date
+
+import dtos._
+import models._
 import play.api.libs.json._
 import play.api.mvc._
+import schedulers.SM2
 
 object Application extends Controller {
   val OkEmpty = Ok(Json.obj("result" -> "ok"))
+
+  def getCardsForToday() = Action { request =>
+    val cards = CardDto.getDueTo(new Date())
+    Ok(Json.toJson(cards))
+  }
 
   def getCards() = Action { request =>
     Ok(Json.toJson(CardDto.getAll))
@@ -18,11 +27,19 @@ object Application extends Controller {
 
   def addCard(question: String, answer: String, article: Option[Long], extract: Option[Long]) = Action { request =>
     val card = new Card(0, question, answer, article, extract)
-    CardDto.save(card)
+    val card_saved = CardDto.save(card)
+    val schedulingInfo = SM2.init(card_saved.id, new Date())
+    SchedulingInfoDto.save(schedulingInfo)
     OkEmpty
   }
 
-  def answerCard(id: Long, quality: Int, date: Option[String]) = TODO
+  def answerCard(id: Long, quality: Int, date: Option[String]) = Action {
+    val dateAnswered = date.map(x => DateFormat.getDateInstance.parse(x)).getOrElse(new Date())
+    val schedulingInfo = SchedulingInfoDto.get(id)
+    val newSchedulingInfo = SM2.schedule(schedulingInfo, dateAnswered, quality)
+    SchedulingInfoDto.update(newSchedulingInfo)
+    Ok()
+  }
 
   def getArticle(id: Long) = Action { request =>
     Ok(Json.toJson(ArticleDto.get(id)))

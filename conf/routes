@@ -1,6 +1,7 @@
 GET     /                    controllers.Assets.at(path="/public", file="index.html")
 
 GET     /cards               controllers.Application.getCards
+GET     /cards/scheduled     controllers.Application.getCardsForToday
 GET     /card/:id            controllers.Application.getCard(id: Long)
 POST    /card                controllers.Application.addCard(question, answer, article: Option[Long], extract: Option[Long])
 POST    /card/:id            controllers.Application.answerCard(id: Long, quality: Int, date: Option[String])

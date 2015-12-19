@@ -4,7 +4,7 @@ import java.util.Date
 
 import models.SchedulingInfo
 
-class SM2 {
+object SM2 {
   def init(id: Long, dateAdded: Date) =
     new SchedulingInfo(
       id = id,
@@ -46,9 +46,6 @@ class SM2 {
   private def addDays(date: Date, days: Long): Date = {
     new Date(date.getTime + days * SM2.MILLIS_IN_DAY)
   }
-}
-
-object SM2 {
 
   private val MILLIS_IN_DAY = 24 * 60 * 60 * 1000
 }
