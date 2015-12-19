@@ -1,5 +1,7 @@
 package dtos
 
+import java.util.Date
+
 import dtos.utils.Util
 import models.Extract
 import play.api.Play.current
@@ -63,17 +65,33 @@ object ExtractDto {
   }
 
   def getAll: List[Extract] = {
-    val articles = new ListBuffer[Extract]()
+    val extracts = new ListBuffer[Extract]()
     DB.withConnection { conn =>
       val statement = conn.prepareStatement("SELECT * FROM Extract")
       val resultSet = statement.executeQuery()
       while (resultSet.next()) {
-        articles += new Extract(resultSet.getLong("id"), resultSet.getString("text"),
+        extracts += new Extract(resultSet.getLong("id"), resultSet.getString("text"),
           Util.fromId(resultSet.getLong("article")),
           Util.fromId(resultSet.getLong("begin")), Util.fromId(resultSet.getLong("end")),
           resultSet.getInt("repetition"), resultSet.getDate("nextDate"))
       }
     }
-    articles.toList
+    extracts.toList
+  }
+
+  def getDueTo(date: Date) = {
+    val extracts = new ListBuffer[Extract]()
+    DB.withConnection { conn =>
+      val statement = conn.prepareStatement("SELECT * FROM Extract WHERE nextDate<=?")
+      statement.setDate(1, new java.sql.Date(date.getTime))
+      val resultSet = statement.executeQuery()
+      while (resultSet.next()) {
+        extracts += new Extract(resultSet.getLong("id"), resultSet.getString("text"),
+          Util.fromId(resultSet.getLong("article")),
+          Util.fromId(resultSet.getLong("begin")), Util.fromId(resultSet.getLong("end")),
+          resultSet.getInt("repetition"), resultSet.getDate("nextDate"))
+      }
+    }
+    extracts.toList
   }
 }

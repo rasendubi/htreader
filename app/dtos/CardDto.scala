@@ -52,30 +52,31 @@ object CardDto {
   }
 
   def getAll: List[Card] = {
-    val articles = new ListBuffer[Card]()
+    val cards = new ListBuffer[Card]()
     DB.withConnection { conn =>
       val statement = conn.prepareStatement("SELECT * FROM Card")
       val resultSet = statement.executeQuery()
       while (resultSet.next()) {
-        articles += new Card(resultSet.getLong("id"), resultSet.getString("question"),
+        cards += new Card(resultSet.getLong("id"), resultSet.getString("question"),
           resultSet.getString("answer"),
           Util.fromId(resultSet.getLong("article")), Util.fromId(resultSet.getLong("extract")))
       }
     }
-    articles.toList
+    cards.toList
   }
 
   def getDueTo(date: Date) = {
-    val articles = new ListBuffer[Card]()
+    val cards = new ListBuffer[Card]()
     DB.withConnection { conn =>
       val statement = conn.prepareStatement("SELECT * FROM Card WHERE id IN (SELECT cardId From SchedulingInfo WHERE nextDate<=?)")
+      statement.setDate(1, new java.sql.Date(date.getTime))
       val resultSet = statement.executeQuery()
       while (resultSet.next()) {
-        articles += new Card(resultSet.getLong("id"), resultSet.getString("question"),
+        cards += new Card(resultSet.getLong("id"), resultSet.getString("question"),
           resultSet.getString("answer"),
           Util.fromId(resultSet.getLong("article")), Util.fromId(resultSet.getLong("extract")))
       }
     }
-    articles.toList
+    cards.toList
   }
 }
