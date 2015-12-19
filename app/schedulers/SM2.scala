@@ -21,7 +21,7 @@ class SM2 {
         eFactor = item.eFactor,
         repetition = 1,
         interval = 1,
-        nextDate = item.nextDate.plusDays(1)
+        nextDate = date.plusDays(1)
       )
     } else {
       val eFactor = easiness(item.eFactor, quality)
