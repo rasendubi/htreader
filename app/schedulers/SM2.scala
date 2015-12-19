@@ -1,27 +1,27 @@
 package schedulers
 
-import java.time.LocalDate
+import java.util.Date
 
 import models.SchedulingInfo
 
 class SM2 {
-  def init(id: Long, dateAdded: LocalDate) =
+  def init(id: Long, dateAdded: Date) =
     new SchedulingInfo(
       id = id,
       eFactor = 2.5,
       repetition = 1,
       interval = 1,
-      nextDate = dateAdded.plusDays(1)
+      nextDate = addDays(dateAdded, 1)
     )
 
-  def schedule(item: SchedulingInfo, date: LocalDate, quality: Int): SchedulingInfo = {
+  def schedule(item: SchedulingInfo, date: Date, quality: Int): SchedulingInfo = {
     if (quality < 3) {
       new SchedulingInfo(
         id = item.id,
         eFactor = item.eFactor,
         repetition = 1,
         interval = 1,
-        nextDate = date.plusDays(1)
+        nextDate = addDays(date, 1)
       )
     } else {
       val eFactor = easiness(item.eFactor, quality)
@@ -31,7 +31,7 @@ class SM2 {
         eFactor = eFactor,
         repetition = item.repetition + 1,
         interval = nextInterval,
-        nextDate = date.plusDays(nextInterval)
+        nextDate = addDays(date, nextInterval)
       )
     }
   }
@@ -43,4 +43,12 @@ class SM2 {
     else if (n == 2) 6
     else Math.round(interval * eFactor)
 
+  private def addDays(date: Date, days: Long): Date = {
+    new Date(date.getTime + days * SM2.MILLIS_IN_DAY)
+  }
+}
+
+object SM2 {
+
+  private val MILLIS_IN_DAY = 24 * 60 * 60 * 1000
 }
