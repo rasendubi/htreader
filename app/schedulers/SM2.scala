@@ -11,7 +11,7 @@ object SM2 {
       eFactor = 2.5,
       repetition = 0,
       interval = 0,
-      nextDate = dateAdded,
+      nextDate = dateAdded
     )
 
   def schedule(item: SchedulingInfo, date: Date, quality: Int): SchedulingInfo = {
