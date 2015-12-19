@@ -1,8 +1,14 @@
 package controllers
 
+import dtos.ArticleDto
+import play.api.libs.json._
 import play.api.mvc._
 
+import models.Article._
+
 object Application extends Controller {
+
+  def getCards() = TODO
 
   def getCard(id: Long) = TODO
 
@@ -10,7 +16,9 @@ object Application extends Controller {
 
   def answerCard(id: Long, quality: Int, date: Option[String]) = TODO
 
-  def getArticle(id: Long) = TODO
+  def getArticle(id: Long) = Action { request =>
+    Ok(Json.toJson(ArticleDto.get(id)))
+  }
 
   def getArticles() = TODO
 
