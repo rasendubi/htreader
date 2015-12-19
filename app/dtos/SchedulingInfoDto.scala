@@ -1,8 +1,8 @@
 package dtos
 
-import play.api.db.DB
-import play.api.Play.current
 import models.SchedulingInfo
+import play.api.Play.current
+import play.api.db.DB
 
 import scala.collection.mutable.ListBuffer
 
@@ -10,14 +10,17 @@ object SchedulingInfoDto {
 
   def save(info: SchedulingInfo): SchedulingInfo = {
     DB.withConnection { conn =>
-      val statement = conn.prepareStatement("INSERT INTO SchedulingInfo (eFactor, repetition, interval, nextDate) VALUES (?, ?, ?, ?)")
+      val statement = conn.prepareStatement("INSERT INTO SchedulingInfo (eFactor, repetition, interval, nextDate) VALUES (?, ?, ?, ?)",
+        java.sql.Statement.RETURN_GENERATED_KEYS)
       statement.setDouble(1, info.eFactor)
       statement.setInt(2, info.repetition)
       statement.setLong(3, info.interval)
       statement.setDate(4, new java.sql.Date(info.nextDate.getTime))
       statement.executeUpdate()
+      val generatedKey = statement.getGeneratedKeys
+      if (generatedKey.next()) new SchedulingInfo(generatedKey.getLong(1), info)
+      else info
     }
-    info
   }
 
   def update(info: SchedulingInfo): SchedulingInfo = {
