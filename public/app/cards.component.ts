@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit} from 'angular2/core';
+import {Component, OnInit, AfterViewChecked} from 'angular2/core';
 import {Card} from './card';
 import {CardsService} from './cards.service';
 
@@ -9,7 +9,7 @@ import {CardsService} from './cards.service';
         'app/cards.component.css'
     ],
 })
-export class CardsComponent implements OnInit, AfterViewInit {
+export class CardsComponent implements OnInit, AfterViewChecked {
     public cards: Card[] = [];
     public userClickedOk = false;
     constructor(private _cardsService: CardsService) { }
@@ -18,8 +18,14 @@ export class CardsComponent implements OnInit, AfterViewInit {
         this._cardsService.getCards().then(cards => this.cards = cards);
     }
 
-    ngAfterViewInit() {
-        // document.getElementById("ok-btn").focus();
+    ngAfterViewChecked() {
+        if (this.selectedCard()) {
+            if (this.userClickedOk) {
+                document.getElementById("mark-btn-4").focus();
+            } else {
+                document.getElementById("ok-btn").focus();
+            }
+        }
     }
 
     selectedCard() {
@@ -28,7 +34,6 @@ export class CardsComponent implements OnInit, AfterViewInit {
 
     okClicked() {
         this.userClickedOk = true;
-        document.getElementById("mark-btn-4").focus();
     }
 
     setMark(value: Number) {
