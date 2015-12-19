@@ -7,7 +7,7 @@ import dtos._
 import models._
 import play.api.libs.json._
 import play.api.mvc._
-import schedulers.SM2
+import schedulers.{ExtractScheduling, SM2}
 
 object Application extends Controller {
   val OkEmpty = Ok(Json.obj("result" -> "ok"))
@@ -34,7 +34,7 @@ object Application extends Controller {
   }
 
   def answerCard(id: Long, quality: Int, date: Option[String]) = Action {
-    val dateAnswered = date.map(x => DateFormat.getDateInstance.parse(x)).getOrElse(new Date())
+    val dateAnswered = date.map(DateFormat.getDateInstance.parse).getOrElse(new Date())
     val schedulingInfo = SchedulingInfoDto.get(id)
     val newSchedulingInfo = SM2.schedule(schedulingInfo, dateAnswered, quality)
     SchedulingInfoDto.update(newSchedulingInfo)
@@ -66,6 +66,19 @@ object Application extends Controller {
   def addExtract(text: String, article: Option[Long], begin: Option[Long], end: Option[Long]) = Action { request =>
     val extract = new Extract(text, article, begin, end, 1, new Date())
     ExtractDto.save(extract)
+    OkEmpty
+  }
+
+  def reviewExtract(id: Long, date: Option[String]) = Action { request =>
+    val dateReviewed = date.map(DateFormat.getDateInstance.parse).getOrElse(new Date())
+    val extract = ExtractDto.get(id)
+    val updatedExtract = ExtractScheduling.schedule(extract, dateReviewed)
+    ExtractDto.update(updatedExtract)
+    OkEmpty
+  }
+
+  def deleteExtract(id: Long) = Action { request =>
+    ExtractDto.delete(id)
     OkEmpty
   }
 
