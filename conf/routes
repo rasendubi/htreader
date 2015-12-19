@@ -1,5 +1,3 @@
-GET     /                    controllers.Assets.at(path="/public", file="index.html")
-
 GET     /api/cards           controllers.Application.getCards
 GET     /api/cards/scheduled controllers.Application.getCardsForToday
 GET     /api/card/:id        controllers.Application.getCard(id: Long)
@@ -14,4 +12,10 @@ GET     /api/extracts        controllers.Application.getExtracts
 GET     /api/extract/:id     controllers.Application.getExtract(id: Long)
 POST    /api/extract         controllers.Application.addExtract(text: String, article: Option[Long], begin: Option[Long], end: Option[Long])
 
-GET     /*file               controllers.Assets.at(path="/public", file)
+# Sochka's shit
+GET     /                    controllers.Assets.at(path="/public", file="index.html")
+GET     /index.html          controllers.Assets.at(path="/public", file="index.html")
+GET     /app/*file           controllers.Assets.at(path="/public/app", file)
+GET     /node_modules/*file  controllers.Assets.at(path="/public/node_modules", file)
+
+GET     /*path               controllers.Application.notFound(path)

@@ -68,4 +68,6 @@ object Application extends Controller {
     ExtractDto.save(extract)
     OkEmpty
   }
+
+  def notFound(path: String) = controllers.Assets.at(path="/public", file="index.html")
 }
