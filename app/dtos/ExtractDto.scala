@@ -11,12 +11,14 @@ object ExtractDto {
 
   def save(extract: Extract): Extract = {
     DB.withConnection { conn =>
-      val statement = conn.prepareStatement("INSERT INTO Extract (text, article, begin, end) VALUES (?, ?, ?, ?)",
+      val statement = conn.prepareStatement("INSERT INTO Extract (text, article, begin, end, repetition, nextDate) VALUES (?, ?, ?, ?, ?, ?)",
         java.sql.Statement.RETURN_GENERATED_KEYS)
       statement.setString(1, extract.text)
       statement.setLong(2, extract.article.getOrElse(0))
       statement.setLong(3, extract.begin.getOrElse(0))
       statement.setLong(4, extract.end.getOrElse(0))
+      statement.setInt(5, extract.repetition)
+      statement.setDate(6, new java.sql.Date(extract.nextDate.getTime))
       statement.executeUpdate()
       val generatedKey = statement.getGeneratedKeys
       if (generatedKey.next()) new Extract(generatedKey.getLong(1), extract)
@@ -24,14 +26,24 @@ object ExtractDto {
     }
   }
 
+  def delete(id: Long) = {
+    DB.withConnection { conn =>
+      val statement = conn.prepareStatement("DELETE FROM Extract WHERE id=?")
+      statement.setLong(1, id)
+      statement.executeUpdate()
+    }
+  }
+
   def update(extract: Extract): Extract = {
     DB.withConnection { conn =>
-      val statement = conn.prepareStatement("UPDATE Extract SET text=?, article=?, begin=?, end=? WHERE id=?")
+      val statement = conn.prepareStatement("UPDATE Extract SET text=?, article=?, begin=?, end=?, repetition=?, nextDate=? WHERE id=?")
       statement.setString(1, extract.text)
       statement.setLong(2, extract.article.getOrElse(0))
       statement.setLong(3, extract.begin.getOrElse(0))
       statement.setLong(4, extract.end.getOrElse(0))
-      statement.setLong(5, extract.id)
+      statement.setInt(5, extract.repetition)
+      statement.setDate(6, new java.sql.Date(extract.nextDate.getTime))
+      statement.setLong(7, extract.id)
       statement.executeUpdate()
     }
     extract
@@ -44,7 +56,8 @@ object ExtractDto {
       val resultSet = statement.executeQuery()
       if (resultSet.next()) new Extract(resultSet.getLong("id"), resultSet.getString("text"),
         Util.fromId(resultSet.getLong("article")),
-        Util.fromId(resultSet.getLong("begin")), Util.fromId(resultSet.getLong("end")))
+        Util.fromId(resultSet.getLong("begin")), Util.fromId(resultSet.getLong("end")),
+        resultSet.getInt("repetition"), resultSet.getDate("nextDate"))
       else null
     }
   }
@@ -57,7 +70,8 @@ object ExtractDto {
       while (resultSet.next()) {
         articles += new Extract(resultSet.getLong("id"), resultSet.getString("text"),
           Util.fromId(resultSet.getLong("article")),
-          Util.fromId(resultSet.getLong("begin")), Util.fromId(resultSet.getLong("end")))
+          Util.fromId(resultSet.getLong("begin")), Util.fromId(resultSet.getLong("end")),
+          resultSet.getInt("repetition"), resultSet.getDate("nextDate"))
       }
     }
     articles.toList
