@@ -1,1 +1,11 @@
-cards component
+<div *ngIf="selectedCard()">
+    <div>The question: {{selectedCard().question}}</div>
+    <div><input type="button" value="OK"></div>
+    <div>Answer: {{selectedCard().answer}} </div>
+    <div>
+        <input *ngFor="#value of [0,1,2,3,4,5]" type="button" value="{{value}}" (click)="setMark(value)">
+    </div>
+</div>
+<div *ngIf="!selectedCard()">
+    No more cards left. Congratulations!
+</div>

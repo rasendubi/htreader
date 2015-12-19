@@ -4,10 +4,37 @@
 
 .leftpanel {
     border-right: 1px solid black;
-    min-width: 10rem;
+    width: 15rem;
+    background-color: #2A2B2F;
+    color: white;
+    padding-left: 2rem;
+    padding-top: 1rem;
     height: 100%;
 }
 
+.leftpanel a {
+    display: block;
+    width: 70%;
+    border: 1px solid rgba( 255, 255, 255, 0.25 );
+    border-radius: 3px;
+    padding: 5px;
+    margin-top: 1rem;
+    text-align: center;
+    line-height: 24px;
+}
+
+.leftpanel a, .leftpanel a:hover, .leftpanel a:visited {
+    color: white;
+}
+
+
 .rightpanel {
+    background-color: gray;
+    padding-top: 2rem;
+    padding-left: 1rem;
     height: 100%;
+    width: 100%;
+    position: fixed;
+    left: 15rem;
+    top: 0;
 }
