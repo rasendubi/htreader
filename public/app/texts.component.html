@@ -1,1 +1,8 @@
-texts component
+List of texts:
+
+<ul>
+    <li *ngFor="#text of texts"> <!-- todo: (click)="gotoText(text)"-->
+      Title: {{text.title}}
+      Content: {{text.content}}
+    </li>
+</ul>
