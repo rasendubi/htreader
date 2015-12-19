@@ -64,7 +64,7 @@ object Application extends Controller {
   }
 
   def addExtract(text: String, article: Option[Long], begin: Option[Long], end: Option[Long]) = Action { request =>
-    val extract = new Extract(0, text, article, begin, end)
+    val extract = new Extract(text, article, begin, end, 1, new Date())
     ExtractDto.save(extract)
     OkEmpty
   }
