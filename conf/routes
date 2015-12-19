@@ -1,17 +1,17 @@
 GET     /                    controllers.Assets.at(path="/public", file="index.html")
 
-GET     /cards               controllers.Application.getCards
-GET     /cards/scheduled     controllers.Application.getCardsForToday
-GET     /card/:id            controllers.Application.getCard(id: Long)
-POST    /card                controllers.Application.addCard(question, answer, article: Option[Long], extract: Option[Long])
-POST    /card/:id            controllers.Application.answerCard(id: Long, quality: Int, date: Option[String])
+GET     /api/cards           controllers.Application.getCards
+GET     /api/cards/scheduled controllers.Application.getCardsForToday
+GET     /api/card/:id        controllers.Application.getCard(id: Long)
+POST    /api/card            controllers.Application.addCard(question, answer, article: Option[Long], extract: Option[Long])
+POST    /api/card/:id        controllers.Application.answerCard(id: Long, quality: Int, date: Option[String])
 
-GET     /articles            controllers.Application.getArticles
-GET     /article/:id         controllers.Application.getArticle(id: Long)
-POST    /article             controllers.Application.addArticle(title: String, text: String, source: Option[String])
+GET     /api/articles        controllers.Application.getArticles
+GET     /api/article/:id     controllers.Application.getArticle(id: Long)
+POST    /api/article         controllers.Application.addArticle(title: String, text: String, source: Option[String])
 
-GET     /extracts            controllers.Application.getExtracts
-GET     /extract/:id         controllers.Application.getExtract(id: Long)
-POST    /extract             controllers.Application.addExtract(text: String, article: Option[Long], begin: Option[Long], end: Option[Long])
+GET     /api/extracts        controllers.Application.getExtracts
+GET     /api/extract/:id     controllers.Application.getExtract(id: Long)
+POST    /api/extract         controllers.Application.addExtract(text: String, article: Option[Long], begin: Option[Long], end: Option[Long])
 
 GET     /*file               controllers.Assets.at(path="/public", file)
