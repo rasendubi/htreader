@@ -82,7 +82,9 @@ object Application extends Controller {
     OkEmpty
   }
 
-  def getExtractsForToday() = TODO
+  def getExtractsForToday() = Action { request =>
+    Ok(Json.toJson(ExtractDto.getDueTo(new Date())))
+  }
 
   def other(path: String) = controllers.Assets.at(path="/public", file="index.html")
 
