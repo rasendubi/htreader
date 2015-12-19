@@ -1,23 +1,27 @@
-GET     /api/cards           controllers.Application.getCards
-GET     /api/cards/scheduled controllers.Application.getCardsForToday
-GET     /api/card/:id        controllers.Application.getCard(id: Long)
-POST    /api/card            controllers.Application.addCard(question, answer, article: Option[Long], extract: Option[Long])
-POST    /api/card/:id        controllers.Application.answerCard(id: Long, quality: Int, date: Option[String])
+GET     /api/cards                  controllers.Application.getCards
+GET     /api/cards/scheduled        controllers.Application.getCardsForToday
+POST    /api/card                   controllers.Application.addCard(question, answer, article: Option[Long], extract: Option[Long])
+GET     /api/card/:id               controllers.Application.getCard(id: Long)
+POST    /api/card/:id               controllers.Application.answerCard(id: Long, quality: Int, date: Option[String])
 
-GET     /api/articles        controllers.Application.getArticles
-GET     /api/article/:id     controllers.Application.getArticle(id: Long)
-POST    /api/article         controllers.Application.addArticle(title: String, text: String, source: Option[String])
+GET     /api/articles               controllers.Application.getArticles
+POST    /api/article                controllers.Application.addArticle(title: String, text: String, source: Option[String])
+GET     /api/article/:id            controllers.Application.getArticle(id: Long)
 
-GET     /api/extracts        controllers.Application.getExtracts
-POST    /api/extract         controllers.Application.addExtract(text: String, article: Option[Long], begin: Option[Long], end: Option[Long])
-GET     /api/extract/:id     controllers.Application.getExtract(id: Long)
-POST    /api/extract/:id     controllers.Application.reviewExtract(id: Long, date: Option[String])
-DELETE  /api/extract/:id     controllers.Application.deleteExtract(id: Long)
+GET     /api/extracts               controllers.Application.getExtracts
+GET     /api/extracts/scheduled     controllers.Application.getExtractsForToday
+POST    /api/extract                controllers.Application.addExtract(text: String, article: Option[Long], begin: Option[Long], end: Option[Long])
+GET     /api/extract/:id            controllers.Application.getExtract(id: Long)
+POST    /api/extract/:id            controllers.Application.reviewExtract(id: Long, date: Option[String])
+DELETE  /api/extract/:id            controllers.Application.deleteExtract(id: Long)
+
+GET     /api/*path                  controllers.Application.notFound(path)
+POST    /api/*path                  controllers.Application.notFound(path)
+DELETE  /api/*path                  controllers.Application.notFound(path)
 
 # Sochka's shit
-GET     /                    controllers.Assets.at(path="/public", file="index.html")
-GET     /index.html          controllers.Assets.at(path="/public", file="index.html")
-GET     /app/*file           controllers.Assets.at(path="/public/app", file)
-GET     /node_modules/*file  controllers.Assets.at(path="/public/node_modules", file)
-
-GET     /*path               controllers.Application.notFound(path)
+GET     /                           controllers.Assets.at(path="/public", file="index.html")
+GET     /index.html                 controllers.Assets.at(path="/public", file="index.html")
+GET     /app/*file                  controllers.Assets.at(path="/public/app", file)
+GET     /node_modules/*file         controllers.Assets.at(path="/public/node_modules", file)
+GET     /*path                      controllers.Application.other(path)

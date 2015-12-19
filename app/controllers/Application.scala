@@ -82,5 +82,9 @@ object Application extends Controller {
     OkEmpty
   }
 
-  def notFound(path: String) = controllers.Assets.at(path="/public", file="index.html")
+  def getExtractsForToday() = TODO
+
+  def other(path: String) = controllers.Assets.at(path="/public", file="index.html")
+
+  def notFound(path: String) = Action { request => NotFound }
 }
