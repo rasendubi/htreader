@@ -20,6 +20,30 @@ object SchedulingInfoDto {
     info
   }
 
+  def update(info: SchedulingInfo): SchedulingInfo = {
+    DB.withConnection { conn =>
+      val statement = conn.prepareStatement("UPDATE SchedulingInfo SET eFactor=?, repetition=?, interval=?, nextDate=? WHERE id=?")
+      statement.setDouble(1, info.eFactor)
+      statement.setInt(2, info.repetition)
+      statement.setLong(3, info.interval)
+      statement.setDate(4, new java.sql.Date(info.nextDate.getTime))
+      statement.setLong(5, info.id)
+      statement.executeUpdate()
+    }
+    info
+  }
+
+  def get(id: Long): SchedulingInfo = {
+    DB.withConnection { conn =>
+      val statement = conn.prepareStatement("SELECT * FROM SchedulingInfo WHERE id=?")
+      statement.setLong(1, id)
+      val resultSet = statement.executeQuery()
+      if (resultSet.next()) new SchedulingInfo(resultSet.getLong("id"), resultSet.getLong("eFactor"),
+        resultSet.getInt("repetition"), resultSet.getLong("interval"), resultSet.getDate("nextDate"))
+      else null
+    }
+  }
+
   def getAll: List[SchedulingInfo] = {
     val infos = new ListBuffer[SchedulingInfo]()
     DB.withConnection { conn =>
