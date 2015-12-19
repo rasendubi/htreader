@@ -9,9 +9,9 @@ object SM2 {
     new SchedulingInfo(
       cardId = id,
       eFactor = 2.5,
-      repetition = 1,
-      interval = 1,
-      nextDate = addDays(dateAdded, 1)
+      repetition = 0,
+      interval = 0,
+      nextDate = dateAdded,
     )
 
   def schedule(item: SchedulingInfo, date: Date, quality: Int): SchedulingInfo = {
