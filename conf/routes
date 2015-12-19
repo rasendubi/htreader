@@ -1,11 +1,15 @@
-# Routes
-# This file defines all application routes (Higher priority routes first)
-# ~~~~
-
-# Home page
 GET     /                    controllers.Assets.at(path="/public", file="index.html")
 
-# Map static resources from the /public folder to the /assets URL path
-GET     /*file               controllers.Assets.at(path="/public", file)
+GET     /card/:id            controllers.Application.getCard(id: Long)
+POST    /card                controllers.Application.addCard(question, answer, article: Option[Long], extract: Option[Long])
+POST    /card/:id            controllers.Application.answerCard(id: Long, quality: Int, date: Option[String])
 
-    
+GET     /articles            controllers.Application.getArticles
+GET     /article/:id         controllers.Application.getArticle(id: Long)
+POST    /article             controllers.Application.addArticle(title: String, text: String, source: Option[String])
+
+GET     /extracts            controllers.Application.getExtracts
+GET     /extract/:id         controllers.Application.getExtract(id: Long)
+POST    /extract             controllers.Application.addExtract(text: String, article: Option[Long], begin: Option[Long], end: Option[Long])
+
+GET     /*file               controllers.Assets.at(path="/public", file)

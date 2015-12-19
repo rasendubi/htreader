@@ -1,3 +1,3 @@
 package models
 
-class Article(val text: String, val source: String)
+class Article(val title: String, val text: String, val source: String)
