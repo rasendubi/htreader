@@ -12,7 +12,7 @@ DELETE  /api/article/:id            controllers.Application.deleteArticle(id: Lo
 
 GET     /api/extracts               controllers.Application.getExtracts
 GET     /api/extracts/scheduled     controllers.Application.getExtractsForToday
-POST    /api/extract                controllers.Application.addExtract(text: String, article: Option[Long], begin: Option[Long], end: Option[Long])
+POST    /api/extract                controllers.Application.addExtract
 GET     /api/extract/:id            controllers.Application.getExtract(id: Long)
 POST    /api/extract/:id            controllers.Application.reviewExtract(id: Long, date: Option[String])
 DELETE  /api/extract/:id            controllers.Application.deleteExtract(id: Long)

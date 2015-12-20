@@ -80,10 +80,15 @@ object Application extends Controller {
     Ok(Json.toJson(ExtractDto.get(id)))
   }
 
-  def addExtract(text: String, article: Option[Long], begin: Option[Long], end: Option[Long]) = Action { request =>
+  def addExtract() = Action.async(parse.urlFormEncoded) { request =>
+    val text = request.body("text").head
+    val article = request.body("article").headOption.map(_.toLong)
+    val begin = request.body("begin").headOption.map(_.toLong)
+    val end = request.body("end").headOption.map(_.toLong)
+
     val extract = new Extract(text, article, begin, end, 0, new Date())
     val savedExtract = ExtractDto.save(extract)
-    Ok(Json.obj("id" -> savedExtract.id))
+    Future(Ok(Json.obj("id" -> savedExtract.id)))
   }
 
   def reviewExtract(id: Long, date: Option[String]) = Action { request =>
