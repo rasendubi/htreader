@@ -56,8 +56,8 @@ object Application extends Controller {
 
   def addArticle(title: String, text: String, source: Option[String]) = Action { request =>
     val article = new Article(0, title, text, source.getOrElse(""))
-    ArticleDto.save(article)
-    OkEmpty
+    val added = ArticleDto.save(article)
+    Ok(Json.obj("id" -> added.id))
   }
 
   def deleteArticle(id: Long) = Action { request =>
