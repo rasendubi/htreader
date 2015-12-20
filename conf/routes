@@ -8,6 +8,7 @@ DELETE  /api/card/:id               controllers.Application.deleteCard(id: Long)
 GET     /api/articles               controllers.Application.getArticles
 POST    /api/article                controllers.Application.addArticle
 GET     /api/article/:id            controllers.Application.getArticle(id: Long)
+POST    /api/article/:id            controllers.Application.updateArticle(id: Long)
 DELETE  /api/article/:id            controllers.Application.deleteArticle(id: Long)
 
 GET     /api/extracts               controllers.Application.getExtracts

@@ -2,10 +2,10 @@ package models
 
 import play.api.libs.json.{Json, Writes}
 
-class Article(val id: Long, val title: String, val text: String, val source: String) {
+class Article(val id: Long, val title: String, val text: String, val source: String, val offset: Long) {
 
-  def this(id: Long, article: Article) = this(id, article.title, article.text, article.source)
-  def this(title: String, text: String, source: String) = this(0, title, text, source)
+  def this(id: Long, article: Article) = this(id, article.title, article.text, article.source, article.offset)
+  def this(title: String, text: String, source: String, offset: Long) = this(0, title, text, source, offset)
 }
 
 object Article {
@@ -15,7 +15,8 @@ object Article {
         "id" -> a.id,
         "title" -> a.title,
         "text" -> a.text,
-        "source" -> a.source
+        "source" -> a.source,
+        "offset" -> a.offset
       )
   }
 }

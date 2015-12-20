@@ -16,7 +16,8 @@ CREATE TABLE Article (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title VARCHAR NOT NULL,
     text VARCHAR NOT NULL,
-    source VARCHAR
+    source VARCHAR,
+    offset bigint NOT NULL
 );
 
 CREATE TABLE Card (

@@ -10,11 +10,12 @@ object ArticleDto {
 
   def save(article: Article): Article = {
     DB.withConnection { conn =>
-      val statement = conn.prepareStatement("INSERT INTO Article (title, text, source) VALUES (?, ?, ?)",
+      val statement = conn.prepareStatement("INSERT INTO Article (title, text, source, offset) VALUES (?, ?, ?, ?)",
         java.sql.Statement.RETURN_GENERATED_KEYS)
       statement.setString(1, article.title)
       statement.setString(2, article.text)
       statement.setString(3, article.source)
+      statement.setLong(4, article.offset)
       statement.executeUpdate()
       val generatedKey = statement.getGeneratedKeys
       if (generatedKey.next()) new Article(generatedKey.getLong(1), article)
@@ -24,11 +25,12 @@ object ArticleDto {
 
   def update(article: Article): Article = {
     DB.withConnection { conn =>
-      val statement = conn.prepareStatement("UPDATE Article SET title=?, text=?, source=? WHERE id=?")
+      val statement = conn.prepareStatement("UPDATE Article SET title=?, text=?, source=?, offset=? WHERE id=?")
       statement.setString(1, article.title)
       statement.setString(2, article.text)
       statement.setString(3, article.source)
-      statement.setLong(4, article.id)
+      statement.setLong(4, article.offset)
+      statement.setLong(5, article.id)
       statement.executeUpdate()
     }
     article
@@ -48,7 +50,7 @@ object ArticleDto {
       statement.setLong(1, id)
       val resultSet = statement.executeQuery()
       if (resultSet.next()) new Article(resultSet.getLong("id"), resultSet.getString("title"),
-        resultSet.getString("text"), resultSet.getString("source"))
+        resultSet.getString("text"), resultSet.getString("source"), resultSet.getLong("offset"))
       else null
     }
   }
@@ -60,7 +62,7 @@ object ArticleDto {
       val resultSet = statement.executeQuery()
       while (resultSet.next()) {
         articles += new Article(resultSet.getLong("id"), resultSet.getString("title"),
-          resultSet.getString("text"), resultSet.getString("source"))
+          resultSet.getString("text"), resultSet.getString("source"), resultSet.getLong("offset"))
       }
     }
     articles.toList

@@ -62,9 +62,20 @@ object Application extends Controller {
     val title = request.body("title").head
     val text = request.body("text").head
     val source = request.body.get("source").map(_.head).getOrElse("")
-    val article = new Article(0, title, text, source)
+    val offset: Long = request.body.get("offset").map(_.head.toLong).getOrElse(0)
+    val article = new Article(0, title, text, source, offset)
     val added = ArticleDto.save(article)
     Future(Ok(Json.obj("id" -> added.id)))
+  }
+
+  def updateArticle(id: Long) = Action.async(parse.urlFormEncoded) { request =>
+    val title = request.body("title").head
+    val text = request.body("text").head
+    val source = request.body.get("source").map(_.head).getOrElse("")
+    val offset: Long = request.body.get("offset").map(_.head.toLong).getOrElse(0)
+    val article = new Article(id, title, text, source, offset)
+    ArticleDto.update(article)
+    Future(OkEmpty)
   }
 
   def deleteArticle(id: Long) = Action { request =>
