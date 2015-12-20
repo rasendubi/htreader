@@ -39,6 +39,15 @@ object CardDto {
     card
   }
 
+  def delete(id: Long) = {
+    deleteSchedulingInfo(id)
+    DB.withConnection { conn =>
+      val statement = conn.prepareStatement("DELETE FROM Card WHERE id=?")
+      statement.setLong(1, id)
+      statement.executeUpdate()
+    }
+  }
+
   def get(id: Long): Card = {
     DB.withConnection { conn =>
       val statement = conn.prepareStatement("SELECT * FROM Card WHERE id=?")
@@ -78,5 +87,13 @@ object CardDto {
       }
     }
     cards.toList
+  }
+
+  private def deleteSchedulingInfo(cardId: Long) = {
+    DB.withConnection { conn =>
+      val statement = conn.prepareStatement("DELETE FROM SchedulingInfo WHERE cardId=?")
+      statement.setLong(1, cardId)
+      statement.executeUpdate()
+    }
   }
 }

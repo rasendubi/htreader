@@ -33,6 +33,11 @@ object Application extends Controller {
     OkEmpty
   }
 
+  def deleteCard(id: Long) = Action { request =>
+    CardDto.delete(id)
+    OkEmpty
+  }
+
   def answerCard(id: Long, quality: Int, date: Option[String]) = Action {
     val dateAnswered = date.map(DateFormat.getDateInstance.parse).getOrElse(new Date())
     val schedulingInfo = SchedulingInfoDto.get(id)
@@ -52,6 +57,11 @@ object Application extends Controller {
   def addArticle(title: String, text: String, source: Option[String]) = Action { request =>
     val article = new Article(0, title, text, source.getOrElse(""))
     ArticleDto.save(article)
+    OkEmpty
+  }
+
+  def deleteArticle(id: Long) = Action { request =>
+    ArticleDto.delete(id)
     OkEmpty
   }
 

@@ -3,10 +3,12 @@ GET     /api/cards/scheduled        controllers.Application.getCardsForToday
 POST    /api/card                   controllers.Application.addCard(question, answer, article: Option[Long], extract: Option[Long])
 GET     /api/card/:id               controllers.Application.getCard(id: Long)
 POST    /api/card/:id               controllers.Application.answerCard(id: Long, quality: Int, date: Option[String])
+DELETE  /api/card/:id               controllers.Application.deleteCard(id: Long)
 
 GET     /api/articles               controllers.Application.getArticles
 POST    /api/article                controllers.Application.addArticle(title: String, text: String, source: Option[String])
 GET     /api/article/:id            controllers.Application.getArticle(id: Long)
+DELETE  /api/article/:id            controllers.Application.deleteArticle(id: Long)
 
 GET     /api/extracts               controllers.Application.getExtracts
 GET     /api/extracts/scheduled     controllers.Application.getExtractsForToday

@@ -34,6 +34,14 @@ object ArticleDto {
     article
   }
 
+  def delete(id: Long) = {
+    DB.withConnection { conn =>
+      val statement = conn.prepareStatement("DELETE FROM Article WHERE id=?")
+      statement.setLong(1, id)
+      statement.executeUpdate()
+    }
+  }
+
   def get(id: Long): Article = {
     DB.withConnection { conn =>
       val statement = conn.prepareStatement("SELECT * FROM Article WHERE id=?")

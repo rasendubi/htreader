@@ -28,14 +28,6 @@ object ExtractDto {
     }
   }
 
-  def delete(id: Long) = {
-    DB.withConnection { conn =>
-      val statement = conn.prepareStatement("DELETE FROM Extract WHERE id=?")
-      statement.setLong(1, id)
-      statement.executeUpdate()
-    }
-  }
-
   def update(extract: Extract): Extract = {
     DB.withConnection { conn =>
       val statement = conn.prepareStatement("UPDATE Extract SET text=?, article=?, begin=?, end=?, repetition=?, nextDate=? WHERE id=?")
@@ -49,6 +41,14 @@ object ExtractDto {
       statement.executeUpdate()
     }
     extract
+  }
+
+  def delete(id: Long) = {
+    DB.withConnection { conn =>
+      val statement = conn.prepareStatement("DELETE FROM Extract WHERE id=?")
+      statement.setLong(1, id)
+      statement.executeUpdate()
+    }
   }
 
   def get(id: Long): Extract = {
