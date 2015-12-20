@@ -1,8 +1,9 @@
 <h3>Dialog for adding new cards</h3>
 <form>
-    <table>
-        <tr><td>Question: </td><td><input type="input" class="form-control" [(ngModel)]="card.question"></td></tr>
-        <tr><td>Answer: </td><td><input type="input" class="form-control" [(ngModel)]="card.answer"></td></tr>
-    </table>
+    <h5>Question</h5>
+    <input #question type="input" class="form-control" [(ngModel)]="card.question">
+    <h5>Answer <input type="button" class="btn btn-sm btn-primary" value="Copy selected"
+        (mousedown)="copySelectionToAnswer(question.selectionStart, question.selectionEnd)"></h5>
+    <textarea class="form-control" [(ngModel)]="card.answer"></textarea>
     <input type="button" value="Add card" class="btn btn-primary" (click)="addCard()">
 </form>

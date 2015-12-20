@@ -26,4 +26,11 @@ export class NewCardComponent implements OnInit {
         this._cardsService.addCard(this.card);
         this._router.navigate(['Extracts']);
     }
+
+    copySelectionToAnswer(selectionStart: number, selectionEnd: number) {
+        this.card.question = this.card.question.substring(0, selectionStart)
+            + '...'
+            + this.card.question.substring(selectionEnd);
+        this.card.answer = document.getSelection().toString();
+    }
 }

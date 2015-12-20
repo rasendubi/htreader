@@ -1,7 +1,11 @@
-input, textarea {
+div {
+    margin-right: 3rem;
+}
+
+.newextractview input, .newextractview textarea {
     margin: 1rem;
 }
 
-textarea {
+.newextractview textarea {
     height: 15rem;
 }
