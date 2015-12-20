@@ -61,7 +61,7 @@ object Application extends Controller {
   def addArticle = Action.async(parse.urlFormEncoded) { request =>
     val title = request.body("title").head
     val text = request.body("text").head
-    val source = request.body("source").headOption.getOrElse("")
+    val source = request.body.get("source").map(_.head).getOrElse("")
     val article = new Article(0, title, text, source)
     val added = ArticleDto.save(article)
     Future(Ok(Json.obj("id" -> added.id)))
@@ -83,8 +83,8 @@ object Application extends Controller {
   def addExtract() = Action.async(parse.urlFormEncoded) { request =>
     val text = request.body("text").head
     val article = request.body("article").headOption.map(_.toLong)
-    val begin = request.body("begin").headOption.map(_.toLong)
-    val end = request.body("end").headOption.map(_.toLong)
+    val begin = request.body.get("begin").map(_.head.toLong)
+    val end = request.body.get("end").map(_.head.toLong)
 
     val extract = new Extract(text, article, begin, end, 0, new Date())
     val savedExtract = ExtractDto.save(extract)
