@@ -2,7 +2,7 @@
 <form>
     <h5>Question</h5>
     <input #question type="input" class="form-control" [(ngModel)]="card.question">
-    <h5>Answer <input type="button" class="btn btn-sm btn-primary" value="Copy selected"
+    <h5>Answer <input type="button" class="btn btn-sm btn-primary" value="Delete cloze"
         (mousedown)="copySelectionToAnswer(question.selectionStart, question.selectionEnd)"></h5>
     <textarea class="form-control" [(ngModel)]="card.answer"></textarea>
     <input type="button" value="Add card" class="btn btn-primary" (click)="addCard()">
