@@ -30,7 +30,7 @@ object Application extends Controller {
     val card_saved = CardDto.save(card)
     val schedulingInfo = SM2.init(card_saved.id, new Date())
     SchedulingInfoDto.save(schedulingInfo)
-    OkEmpty
+    Ok(Json.obj("id" -> card_saved.id))
   }
 
   def deleteCard(id: Long) = Action { request =>
@@ -75,8 +75,8 @@ object Application extends Controller {
 
   def addExtract(text: String, article: Option[Long], begin: Option[Long], end: Option[Long]) = Action { request =>
     val extract = new Extract(text, article, begin, end, 0, new Date())
-    ExtractDto.save(extract)
-    OkEmpty
+    val savedExtract = ExtractDto.save(extract)
+    Ok(Json.obj("id" -> savedExtract.id))
   }
 
   def reviewExtract(id: Long, date: Option[String]) = Action { request =>
