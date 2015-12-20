@@ -1,7 +1,6 @@
-import {Component} from 'angular2/core';
-import {Injectable} from 'angular2/core';
+import {Component, Injectable} from 'angular2/core';
+import {Http, Headers} from 'angular2/http';
 import {Article} from './article';
-import {Http} from "angular2/http";
 
 @Injectable()
 export class ArticlesService {
@@ -25,14 +24,12 @@ export class ArticlesService {
 
     addArticle(article: Article): Promise<number> {
         return new Promise((resolve, reject) => {
-            /*
-            ?title=${encodeURIComponent(article.title)}` +
-                                        `&text=${encodeURIComponent(article.text)}`+
-                                        `&source=${encodeURIComponent(article.source)}
-                                        */
+            const headers = new Headers();
+            headers.append('Content-Type', 'application/x-www-form-urlencoded');
             this._http.post(`/api/article`, `title=${encodeURIComponent(article.title)}` +
                                             `&text=${encodeURIComponent(article.text)}`+
-                                            `&source=${encodeURIComponent(article.source)}`)
+                                            `&source=${encodeURIComponent(article.source)}`,
+                                            {headers})
                 .subscribe(value => resolve(<number> value.json().id));
         });
     }
