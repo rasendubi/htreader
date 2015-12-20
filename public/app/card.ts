@@ -1,5 +1,6 @@
 export interface Card {
-    id: number,
+    id?: number,
     question: string,
-    answer: string
+    answer: string,
+    extractId?: number
 }

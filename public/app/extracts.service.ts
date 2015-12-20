@@ -15,5 +15,9 @@ export class ExtractsService {
     rescheduleExtract(extract: Extract) {
         this._http.post(`/api/extract/${extract.id}`, "").subscribe();
     }
+
+    deleteExtract(extract: Extract) {
+        this._http.delete(`/api/extract/${extract.id}`).subscribe();
+    }
 }
 

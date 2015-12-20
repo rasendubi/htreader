@@ -1,10 +1,19 @@
 <div class="cardsview">
+    <h3>List of extracts </h3>
     <table>
         <tr *ngFor="#extract of extracts">
             <td>{{extract.text}}</td>
-            <td width="50px">
+            <td width="80px">
                 <input type="button" class="btn btn-primary"
                     value="Reschedule" (click)="rescheduleExtract(extract)">
+            </td>
+            <td width="80px">
+                <input type="button" class="btn btn-success"
+                    value="Create card" (click)="createCardFromExtract(extract)">
+            </td>
+            <td width="80px">
+                <input type="button" class="btn btn-danger"
+                    value="Delete extract" (click)="deleteExtract(extract)">
             </td>
         </tr>
     </table>

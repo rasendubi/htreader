@@ -1,0 +1,8 @@
+<h3>Dialog for adding new cards</h3>
+<form>
+    <table>
+        <tr><td>Question: </td><td><input type="input" class="form-control" [(ngModel)]="card.question"></td></tr>
+        <tr><td>Answer: </td><td><input type="input" class="form-control" [(ngModel)]="card.answer"></td></tr>
+    </table>
+    <input type="button" value="Add card" class="btn btn-primary" (click)="addCard()">
+</form>

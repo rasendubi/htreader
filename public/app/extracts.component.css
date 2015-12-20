@@ -1,4 +1,16 @@
-.cardsview table {
+.cardsview {
+    padding-right: 10rem;
+}
+
+table {
     width: 100%;
-    margin-right: 5rem;
+}
+
+td {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+input {
+    margin-left: 1rem;
 }
