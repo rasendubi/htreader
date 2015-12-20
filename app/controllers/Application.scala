@@ -9,6 +9,8 @@ import play.api.libs.json._
 import play.api.mvc._
 import schedulers.{ExtractScheduling, SM2}
 
+import scala.concurrent.Future
+
 object Application extends Controller {
   val OkEmpty = Ok(Json.obj("result" -> "ok"))
 
@@ -54,10 +56,13 @@ object Application extends Controller {
     Ok(Json.toJson(ArticleDto.getAll))
   }
 
-  def addArticle(title: String, text: String, source: Option[String]) = Action { request =>
-    val article = new Article(0, title, text, source.getOrElse(""))
+  def addArticle = Action.async(parse.urlFormEncoded) { request =>
+    val title = request.body("title").head
+    val text = request.body("text").head
+    val source = request.body("source").headOption.getOrElse("")
+    val article = new Article(0, title, text, source)
     val added = ArticleDto.save(article)
-    Ok(Json.obj("id" -> added.id))
+    Future(Ok(Json.obj("id" -> added.id)))
   }
 
   def deleteArticle(id: Long) = Action { request =>

@@ -6,7 +6,7 @@ POST    /api/card/:id               controllers.Application.answerCard(id: Long,
 DELETE  /api/card/:id               controllers.Application.deleteCard(id: Long)
 
 GET     /api/articles               controllers.Application.getArticles
-POST    /api/article                controllers.Application.addArticle(title: String, text: String, source: Option[String])
+POST    /api/article                controllers.Application.addArticle
 GET     /api/article/:id            controllers.Application.getArticle(id: Long)
 DELETE  /api/article/:id            controllers.Application.deleteArticle(id: Long)
 
