@@ -1,24 +1,26 @@
-<h3>List of articles </h3>
-<table>
-    <tr *ngFor="#article of articles">
-        <td>{{article.title}}</td>
-        <td width="80px">
-            <input type="button" class="btn btn-primary"
-                value="View" (click)="viewArticle(text)">
-        </td>
-        <td width="80px">
-            <input type="button" class="btn btn-danger"
-                value="Delete article" (click)="deleteArticle(article)">
-        </td>
-    </tr>
-</table>
-<div *ngIf="!articles">
-    No more article. Well done!
+<div class="articlesview">
+    <h3>List of articles </h3>
+    <table>
+        <tr *ngFor="#article of articles">
+            <td>{{article.title}}</td>
+            <td width="80px">
+                <input type="button" class="btn btn-primary"
+                    value="View" (click)="viewArticle(article)">
+            </td>
+            <td width="80px">
+                <input type="button" class="btn btn-danger"
+                    value="Delete article" (click)="deleteArticle(article)">
+            </td>
+        </tr>
+    </table>
+    <div *ngIf="!articles">
+        No more article. Well done!
+    </div>
 </div>
 
-<!--<form>
+<form>
     <div>Article name</div>
-    <div><input type="text" class="form-control" placeholder="Some cool article" [(ngModel)]="newText.title"></div>
-    <div><textarea [(ngModel)]="newText.text"></textarea></div>
+    <div><input type="text" class="form-control" placeholder="Some cool article" [(ngModel)]="newArticle.title"></div>
+    <div><textarea [(ngModel)]="newArticle.text"></textarea></div>
     <div><input class="btn btn-primary" value="Add text" (click)="addArticle()"></div>
-</form>-->
+</form>

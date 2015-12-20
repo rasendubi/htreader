@@ -12,6 +12,7 @@ import {ExtractsService} from './extracts.service';
 })
 export class ExtractsComponent {
     public extracts: Extract[] = [];
+
     constructor(private _extractsService: ExtractsService, private _router: Router) { }
 
     ngOnInit() {

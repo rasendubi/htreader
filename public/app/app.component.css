@@ -10,7 +10,12 @@
     padding-left: 2rem;
     padding-top: 1rem;
     height: 100%;
-    padding-top: 5rem;
+    padding-top: 3rem;
+}
+
+.product-header {
+    color: #a66;
+    margin-bottom: 1rem;
 }
 
 .leftpanel a {
