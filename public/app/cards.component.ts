@@ -7,7 +7,7 @@ import {CardsService} from './cards.service';
     styleUrls: [
         'node_modules/bootstrap/dist/css/bootstrap.css',
         'app/cards.component.css'
-    ],
+    ]
 })
 export class CardsComponent implements OnInit, AfterViewChecked {
     public cards: Card[] = [];
@@ -37,6 +37,7 @@ export class CardsComponent implements OnInit, AfterViewChecked {
     }
 
     setMark(value: Number) {
+        this._cardsService.markCard(this.selectedCard().id, value);
         this.cards.splice(0, 1); // remove this card from the list
         this.userClickedOk = false;
     }

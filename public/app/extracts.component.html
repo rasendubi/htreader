@@ -1,6 +1,14 @@
-Extracts components
-<ul>
-    <li>Text 1</li>
-    <li>Text 2</li>
-    <li>Text 3</li>
-</ul>
+<div class="cardsview">
+    <table>
+        <tr *ngFor="#extract of extracts">
+            <td>{{extract.text}}</td>
+            <td width="50px">
+                <input type="button" class="btn btn-primary"
+                    value="Reschedule" (click)="rescheduleExtract(extract)">
+            </td>
+        </tr>
+    </table>
+    <div *ngIf="!extracts">
+        No more extracts. Well done!
+    </div>
+</div>
