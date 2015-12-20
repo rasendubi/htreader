@@ -1,9 +1,10 @@
 import {Component, Injectable} from 'angular2/core';
-import {Http} from "angular2/http";
+import {Http, Headers} from 'angular2/http';
 import {Extract} from './extract';
 
 @Injectable()
 export class ExtractsService {
+    public selectionText = "";
     constructor(private _http: Http) { }
 
     getExtracts(): Promise<Extract[]> {
@@ -18,6 +19,13 @@ export class ExtractsService {
 
     deleteExtract(extract: Extract) {
         this._http.delete(`/api/extract/${extract.id}`).subscribe();
+    }
+
+    addExtract(extract: Extract) {
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        this._http.post(`/api/extract`, `text=${encodeURIComponent(extract.text)}&article=${extract.article}`, {headers})
+            .subscribe();
     }
 }
 

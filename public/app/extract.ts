@@ -1,5 +1,5 @@
 export interface Extract {
-    id: number,
+    id?: number,
     text: string,
     article?: number
 }

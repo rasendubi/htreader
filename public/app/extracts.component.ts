@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {Router} from 'angular2/router';
 import {Extract} from './extract';
 import {ExtractsService} from './extracts.service';
@@ -10,7 +10,7 @@ import {ExtractsService} from './extracts.service';
         'app/extracts.component.css'
     ]
 })
-export class ExtractsComponent {
+export class ExtractsComponent implements OnInit {
     public extracts: Extract[] = [];
 
     constructor(private _extractsService: ExtractsService, private _router: Router) { }

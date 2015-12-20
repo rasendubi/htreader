@@ -1,6 +1,11 @@
 <div *ngIf="article">
-    <h3>{{article.title}}</h3>
-    {{article.text}}
+    <h3>{{article.title}}
+        <input type="button" value="Create extract" class="btn btn-primary btn-sm"
+            (click)="createExtractFromSelection(article.id)">
+    </h3>
+    <div class="articleText">
+        {{article.text}}
+    </div>
 </div>
 <div *ngIf="!article">
     Loading article...

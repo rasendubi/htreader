@@ -25,6 +25,5 @@ export class NewCardComponent implements OnInit {
     addCard() {
         this._cardsService.addCard(this.card);
         this._router.navigate(['Extracts']);
-
     }
 }

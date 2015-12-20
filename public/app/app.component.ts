@@ -5,6 +5,7 @@ import {ExtractsComponent} from './extracts.component';
 import {ArticlesComponent} from './articles.component';
 import {ArticleComponent} from './article.component';
 import {NewCardComponent} from './newcard.component';
+import {NewExtractComponent} from './newextract.component';
 
 @Component({
     selector: 'ht-reader',
@@ -20,6 +21,7 @@ import {NewCardComponent} from './newcard.component';
   {path: '/extracts', name: 'Extracts', component: ExtractsComponent},
   {path: '/articles/', name: 'Articles', component: ArticlesComponent},
   {path: '/newcard/', name: 'NewCard', component: NewCardComponent},
-  {path: '/article/:id', name: 'Article', component: ArticleComponent}
+  {path: '/article/:id', name: 'Article', component: ArticleComponent},
+  {path: '/article/:articleId/extract', name: 'NewExtract', component: NewExtractComponent}
 ])
 export class AppComponent { }
