@@ -17,7 +17,7 @@ export class CardsService {
                 `answer=${encodeURIComponent(card.answer)}`, "").subscribe();
     }
 
-    markCard(id: Number, mark: Number) {
+    markCard(id: number, mark: number) {
         this._http.post(`/api/card/${id}?quality=${mark}`, "").subscribe();
     }
 }

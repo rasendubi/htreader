@@ -36,7 +36,7 @@ export class CardsComponent implements OnInit, AfterViewChecked {
         this.userClickedOk = true;
     }
 
-    setMark(value: Number) {
+    setMark(value: number) {
         this._cardsService.markCard(this.selectedCard().id, value);
         this.cards.splice(0, 1); // remove this card from the list
         this.userClickedOk = false;

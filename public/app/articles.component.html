@@ -17,10 +17,10 @@
         No more article. Well done!
     </div>
 </div>
-
-<form>
-    <div>Article name</div>
-    <div><input type="text" class="form-control" placeholder="Some cool article" [(ngModel)]="newArticle.title"></div>
-    <div><textarea [(ngModel)]="newArticle.text"></textarea></div>
+<hr>
+<div class="newarticleview">
+    <h3>Add new article</h3>
+    <input type="text" class="form-control" placeholder="Article title" [(ngModel)]="newArticle.title">
+    <div><textarea class="form-control" [(ngModel)]="newArticle.text" placeholder="Article contents"></textarea>
     <div><input class="btn btn-primary" value="Add text" (click)="addArticle()"></div>
-</form>
+</div>
