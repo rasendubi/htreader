@@ -9,6 +9,8 @@ import play.api.libs.json._
 import play.api.mvc._
 import schedulers.{ExtractScheduling, SM2}
 
+import play.api.libs.concurrent.Execution.Implicits._
+
 import scala.concurrent.Future
 
 object Application extends Controller {
